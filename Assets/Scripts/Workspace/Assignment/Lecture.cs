@@ -60,7 +60,14 @@ namespace Assignment
 
         public void LCT03_SyntaxHashTable()
         {
-            throw new System.NotImplementedException();
+            Hashtable table = new Hashtable();
+            table.Add("Potion", 5);
+            table.Add(5, "Potion");
+
+            foreach (var item in table)
+            {
+                Debug.Log($"item {item}");
+            }
         }
 
         public void LCT04_SyntaxDictionary()
