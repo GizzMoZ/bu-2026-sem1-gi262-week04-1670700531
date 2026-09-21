@@ -11,7 +11,7 @@ namespace Assignment
             AS02_CountNumber();
             AS03_CheckValidBrackets();
             AS04_PrintReverseLinkedList();
-            // AS05_FindMiddleElement();
+            AS05_FindMiddleElement();
             // AS06_MergeDictionaries();
             // AS07_RemoveDuplicatesFromLinkedList();
             // AS08_TopFrequentNumber();
@@ -134,7 +134,20 @@ namespace Assignment
         public void AS04_PrintReverseLinkedList()
         {
             LinkedList<int> list = as04List.GetLinkedList();
-            throw new System.NotImplementedException();
+
+            if (list.Count == 0)
+            {
+                Debug.Log("List is empty");
+                return;
+            }
+
+            LinkedListNode<int> current = list.Last;
+
+            while (current != null)
+            {
+                Debug.Log(current.Value);
+                current = current.Previous;
+            }
         }
 
         [Header("AS05 - Find Middle Element")]
@@ -143,7 +156,23 @@ namespace Assignment
         public void AS05_FindMiddleElement()
         {
             LinkedList<string> list = as05List.GetLinkedList();
-            throw new System.NotImplementedException();
+
+            if (list.Count == 0)
+            {
+                Debug.Log("List is empty");
+                return;
+            }
+
+            LinkedListNode<string> slow = list.First;
+            LinkedListNode<string> fast = list.First;
+
+            while (fast != null && fast.Next != null)
+            {
+                slow = slow.Next;
+                fast = fast.Next.Next;
+            }
+
+            Debug.Log(slow.Value);
         }
 
         [Header("AS06 - Merge Dictionaries")]
@@ -154,7 +183,21 @@ namespace Assignment
         {
             Dictionary<string, int> dict1 = as06FirstDictionary.GetDictionary();
             Dictionary<string, int> dict2 = as06SecondDictionary.GetDictionary();
-            throw new System.NotImplementedException();
+
+            Dictionary<string, int> mergedDictionary = new Dictionary<string, int>(dict1);
+
+            foreach (KeyValuePair<string, int> pair in dict2)
+            {
+                if (mergedDictionary.ContainsKey(pair.Key))
+                    mergedDictionary[pair.Key] = mergedDictionary[pair.Key] + pair.Value;
+                else
+                    mergedDictionary.Add(pair.Key, pair.Value);
+            }
+
+            foreach (KeyValuePair<string, int> pair in mergedDictionary)
+            {
+                Debug.Log($"key: {pair.Key}, value: {pair.Value}");
+            }
         }
 
         [Header("AS07 - Remove Duplicates From Linked List")]
@@ -163,7 +206,27 @@ namespace Assignment
         public void AS07_RemoveDuplicatesFromLinkedList()
         {
             LinkedList<int> list = as07List.GetLinkedList();
-            throw new System.NotImplementedException();
+
+            Dictionary<int, bool> seen = new Dictionary<int, bool>();
+            LinkedListNode<int> current = list.First;
+
+            while (current != null)
+            {
+                // เก็บโหนดถัดไปไว้ก่อน เพราะ current อาจถูกลบออกจากลิสต์
+                LinkedListNode<int> next = current.Next;
+
+                if (seen.ContainsKey(current.Value))
+                    list.Remove(current);
+                else
+                    seen.Add(current.Value, true);
+
+                current = next;
+            }
+
+            foreach (int value in list)
+            {
+                Debug.Log(value);
+            }
         }
 
         [Header("AS08 - Top Frequent Number")]
