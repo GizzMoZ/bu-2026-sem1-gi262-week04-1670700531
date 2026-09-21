@@ -9,8 +9,8 @@ namespace Assignment
         {
             AS01_CountWords();
             AS02_CountNumber();
-            // AS03_CheckValidBrackets();
-            // AS04_PrintReverseLinkedList();
+            AS03_CheckValidBrackets();
+            AS04_PrintReverseLinkedList();
             // AS05_FindMiddleElement();
             // AS06_MergeDictionaries();
             // AS07_RemoveDuplicatesFromLinkedList();
@@ -86,7 +86,46 @@ namespace Assignment
         public void AS03_CheckValidBrackets()
         {
             string input = as03Input;
-            throw new System.NotImplementedException();
+
+            Dictionary<char, char> pairs = new Dictionary<char, char>();
+            pairs.Add('(', ')');
+            pairs.Add('[', ']');
+            pairs.Add('{', '}');
+
+            LinkedList<char> stack = new LinkedList<char>();
+            bool isValid = true;
+
+            for (int i = 0; i < input.Length; i++)
+            {
+                char c = input[i];
+
+                if (pairs.ContainsKey(c))
+                {
+                    stack.AddLast(c);
+                }
+                else if (pairs.ContainsValue(c))
+                {
+                    if (stack.Count == 0)
+                    {
+                        isValid = false;
+                        break;
+                    }
+
+                    char open = stack.Last.Value;
+                    if (pairs[open] != c)
+                    {
+                        isValid = false;
+                        break;
+                    }
+
+                    stack.RemoveLast();
+                }
+            }
+
+            if (stack.Count > 0)
+                isValid = false;
+
+            Debug.Log(isValid ? "Valid" : "Invalid");
         }
 
         [Header("AS04 - Print Reverse Linked List")]
