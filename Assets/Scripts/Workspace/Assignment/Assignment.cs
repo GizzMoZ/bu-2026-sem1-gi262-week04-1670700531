@@ -16,8 +16,8 @@ namespace Assignment
             AS07_RemoveDuplicatesFromLinkedList();
             AS08_TopFrequentNumber();
             AS09_PlayerInventory();
-            // AS10_GameEventQueue();
-            // AS11_PlayerStatsTracker();
+            AS10_GameEventQueue();
+            AS11_PlayerStatsTracker();
         }
 
         #region Assignment
@@ -298,7 +298,28 @@ namespace Assignment
         public void AS10_GameEventQueue()
         {
             LinkedList<GameEvent> eventQueue = as10EventQueue.GetLinkedList();
-            throw new System.NotImplementedException();
+
+            if (eventQueue.Count == 0)
+            {
+                Debug.Log("Event queue is empty");
+                return;
+            }
+
+            while (eventQueue.Count > 0)
+            {
+                GameEvent currentEvent = eventQueue.First.Value;
+                eventQueue.RemoveFirst();
+
+                Debug.Log($"Processing event: {currentEvent.Name}");
+                Debug.Log($"Remaining events in queue: {eventQueue.Count}");
+
+                if (currentEvent.EventType == "enemy")
+                    Debug.Log($"Enemy event processed - {currentEvent.Name}");
+                else if (currentEvent.EventType == "powerup")
+                    Debug.Log($"Power-up event processed - {currentEvent.Name}");
+                else if (currentEvent.EventType == "level")
+                    Debug.Log($"Level event processed - {currentEvent.Name}");
+            }
         }
 
         [Header("AS11 - Player Stats Tracker")]
@@ -311,7 +332,19 @@ namespace Assignment
             Dictionary<string, int> playerStats = as11PlayerStats.GetDictionary();
             string statName = as11StatName;
             int value = as11Value;
-            throw new System.NotImplementedException();
+
+            if (playerStats.ContainsKey(statName))
+                playerStats[statName] = playerStats[statName] + value;
+            else
+                playerStats.Add(statName, value);
+
+            Debug.Log($"Updated {statName}: {playerStats[statName]}");
+            Debug.Log("Current player statistics:");
+
+            foreach (KeyValuePair<string, int> pair in playerStats)
+            {
+                Debug.Log($"{pair.Key}: {pair.Value}");
+            }
         }
 
         #endregion
